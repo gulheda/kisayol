@@ -140,7 +140,7 @@ function renderSection(section){
   }).join('');
 
   return `
-    <section class="category-section" data-cat="${section.id}">
+    <section class="category-section ${section.special ? 'featured' : ''}" data-cat="${section.id}">
       <div class="section-heading">
         ${section.special ? '<span class="section-star">★</span>' : ''}
         <h3>${escapeHtml(section.name)}</h3>
@@ -308,6 +308,7 @@ function openLinkModal(id, presetCategoryId){
 
 function closeLinkModal(){ linkModalOverlay.classList.add('hidden'); }
 
+document.getElementById('addCategoryBtn').addEventListener('click', () => openCategoryModal());
 document.getElementById('addLinkBtn').addEventListener('click', () => {
   if(state.categories.length === 0){
     showToast('Önce bir başlık oluştur.');

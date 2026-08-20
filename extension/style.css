@@ -125,6 +125,11 @@ body{
 .add-btn svg{ width: 16px; height: 16px; }
 .add-btn:hover{ transform: translateY(-2px); filter: brightness(1.08); }
 .add-btn:active{ transform: translateY(0); }
+.add-btn.ghost-btn{
+  background: transparent; color: var(--text); border: 1.5px solid var(--border-strong);
+  box-shadow: none;
+}
+.add-btn.ghost-btn:hover{ border-color: var(--accent); color: var(--accent); filter: none; }
 
 .menu-dropdown{
   position: absolute; top: calc(100% + 10px); right: 96px;
@@ -152,8 +157,17 @@ body{
 }
 
 /* ---------------- sections ---------------- */
-#categoriesContainer{ display: flex; flex-direction: column; }
-.category-section{ margin-bottom: 28px; }
+#categoriesContainer{
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px; align-items: start;
+}
+.category-section{
+  background: var(--bg-card); border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-md); padding: 18px; box-shadow: var(--shadow-md);
+}
+.category-section.featured{
+  grid-column: 1 / -1; background: transparent; border: none; box-shadow: none; padding: 0;
+}
 .section-heading{ display: flex; align-items: center; gap: 8px; margin: 0 0 12px; flex-wrap: wrap; }
 .section-star{ color: var(--accent); font-size: 0.8rem; }
 .section-heading h3{
