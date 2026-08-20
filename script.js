@@ -118,10 +118,27 @@ function renderRow(link, rankIndex){
 
 function renderSection(section){
   const rowsHtml = section.links.map((l, i) => renderRow(l, section.special ? i : null)).join('');
-  const emptyHint = (!section.special && section.links.length === 0)
+  const subs = section.subs || [];
+  const emptyHint = (!section.special && section.links.length === 0 && subs.length === 0)
     ? `<p class="list-empty-hint">Bu başlıkta henüz link yok.</p>` : '';
   const addBtn = !section.special
     ? `<button class="add-to-cat-btn" data-cat="${section.id}">+ link ekle</button>` : '';
+
+  const subsHtml = subs.map(sub => {
+    const subRows = sub.links.map(l => renderRow(l, null)).join('');
+    const subEmptyHint = sub.links.length === 0
+      ? `<p class="list-empty-hint">Bu alt başlıkta henüz link yok.</p>` : '';
+    return `
+      <div class="subcategory" data-cat="${sub.id}">
+        <div class="subsection-heading">
+          <h4>${escapeHtml(sub.name)}</h4>
+          <button class="add-to-cat-btn" data-cat="${sub.id}">+ link ekle</button>
+        </div>
+        ${sub.links.length > 0 ? `<div class="link-list">${subRows}</div>` : ''}
+        ${subEmptyHint}
+      </div>`;
+  }).join('');
+
   return `
     <section class="category-section" data-cat="${section.id}">
       <div class="section-heading">
@@ -129,10 +146,9 @@ function renderSection(section){
         <h3>${escapeHtml(section.name)}</h3>
         ${addBtn}
       </div>
-      <div class="link-list">
-        ${rowsHtml}
-      </div>
+      ${section.links.length > 0 ? `<div class="link-list">${rowsHtml}</div>` : ''}
       ${emptyHint}
+      ${subsHtml}
     </section>`;
 }
 
@@ -154,9 +170,15 @@ function render(){
   const sections = [];
   if(favLinks.length) sections.push({ id: FAVORITES_ID, name: 'Sık Kullanılanlar', special: true, links: favLinks });
 
-  state.categories.forEach(cat => {
+  const topCategories = state.categories.filter(c => !c.parentId);
+  topCategories.forEach(cat => {
     const links = state.links.filter(l => l.categoryId === cat.id).filter(matches);
-    if(!query || links.length) sections.push({ id: cat.id, name: cat.name, special: false, links });
+    const subs = state.categories
+      .filter(sc => sc.parentId === cat.id)
+      .map(sc => ({ id: sc.id, name: sc.name, links: state.links.filter(l => l.categoryId === sc.id).filter(matches) }))
+      .filter(sub => !query || sub.links.length);
+    const hasAnything = links.length > 0 || subs.some(s => s.links.length > 0);
+    if(!query || hasAnything) sections.push({ id: cat.id, name: cat.name, special: false, links, subs });
   });
 
   const nothingAtAll = state.categories.length === 0 && state.links.length === 0;
@@ -254,7 +276,14 @@ const linkForm = document.getElementById('linkForm');
 
 function populateCategorySelect(selectedId){
   const select = document.getElementById('linkCategory');
-  select.innerHTML = state.categories.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');
+  const topCats = state.categories.filter(c => !c.parentId);
+  select.innerHTML = topCats.map(c => {
+    const subOptions = state.categories
+      .filter(sc => sc.parentId === c.id)
+      .map(sc => `<option value="${sc.id}">&nbsp;&nbsp;↳ ${escapeHtml(sc.name)}</option>`)
+      .join('');
+    return `<option value="${c.id}">${escapeHtml(c.name)}</option>${subOptions}`;
+  }).join('');
   if(selectedId) select.value = selectedId;
 }
 
@@ -353,43 +382,90 @@ function openCategoryModal(){
   setTimeout(() => document.getElementById('newCategoryName').focus(), 50);
 }
 
+function deleteCategoryCascade(id){
+  const cat = categoryById(id);
+  if(!cat) return;
+  const isTop = !cat.parentId;
+  const subIds = isTop ? state.categories.filter(c => c.parentId === id).map(c => c.id) : [];
+  const allIds = [id, ...subIds];
+  const linkCount = state.links.filter(l => allIds.includes(l.categoryId)).length;
+
+  const doDelete = () => {
+    state.links = state.links.filter(l => !allIds.includes(l.categoryId));
+    state.categories = state.categories.filter(c => !allIds.includes(c.id));
+    saveState();
+    renderCategoryList();
+    render();
+    showToast('Başlık silindi.');
+  };
+
+  if(subIds.length > 0){
+    openConfirm(`Bu başlık ve ${subIds.length} alt başlığındaki toplam ${linkCount} link silinecek. Devam edilsin mi?`, doDelete);
+  }else if(linkCount > 0){
+    openConfirm(`Bu başlıktaki ${linkCount} link de birlikte silinecek. Devam edilsin mi?`, doDelete);
+  }else{
+    doDelete();
+  }
+}
+
+function populateParentSelect(){
+  const select = document.getElementById('newCategoryParent');
+  if(!select) return;
+  const topCats = state.categories.filter(c => !c.parentId);
+  select.innerHTML = `<option value="">— Ana başlık —</option>` +
+    topCats.map(c => `<option value="${c.id}">${escapeHtml(c.name)} altına alt başlık</option>`).join('');
+}
+
 function renderCategoryList(){
   const list = document.getElementById('categoryList');
-  if(state.categories.length === 0){
+  const topCats = state.categories.filter(c => !c.parentId);
+
+  if(topCats.length === 0){
     list.innerHTML = `<p class="list-empty-hint">Henüz başlık yok. Aşağıdan bir tane ekle.</p>`;
-    return;
+  }else{
+    list.innerHTML = topCats.map(c => {
+      const directCount = state.links.filter(l => l.categoryId === c.id).length;
+      const subCats = state.categories.filter(sc => sc.parentId === c.id);
+      const subRows = subCats.map(sc => {
+        const subCount = state.links.filter(l => l.categoryId === sc.id).length;
+        return `
+          <div class="category-row-item sub">
+            <span class="cname">↳ ${escapeHtml(sc.name)}</span>
+            <span class="ccount">${subCount} link</span>
+            <button data-id="${sc.id}" aria-label="Alt başlığı sil">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2m2 0l-1 13a1 1 0 01-1 1H8a1 1 0 01-1-1L6 7h12z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>`;
+      }).join('');
+      return `
+        <div class="category-group">
+          <div class="category-row-item">
+            <span class="cname">${escapeHtml(c.name)}</span>
+            <span class="ccount">${directCount} link</span>
+            <button class="add-sub-btn" data-parent="${c.id}">+ alt başlık</button>
+            <button data-id="${c.id}" aria-label="Başlığı sil">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2m2 0l-1 13a1 1 0 01-1 1H8a1 1 0 01-1-1L6 7h12z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          ${subRows}
+        </div>`;
+    }).join('');
   }
-  list.innerHTML = state.categories.map(c => {
-    const count = state.links.filter(l => l.categoryId === c.id).length;
-    return `
-      <div class="category-row-item">
-        <span class="cname">${escapeHtml(c.name)}</span>
-        <span class="ccount">${count} link</span>
-        <button data-id="${c.id}" aria-label="Başlığı sil">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M9 7V5a1 1 0 011-1h4a1 1 0 011 1v2m2 0l-1 13a1 1 0 01-1 1H8a1 1 0 01-1-1L6 7h12z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>`;
-  }).join('');
 
   list.querySelectorAll('button[data-id]').forEach(btn => {
+    btn.addEventListener('click', () => deleteCategoryCascade(btn.dataset.id));
+  });
+
+  list.querySelectorAll('.add-sub-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const id = btn.dataset.id;
-      const count = state.links.filter(l => l.categoryId === id).length;
-      const doDelete = () => {
-        state.links = state.links.filter(l => l.categoryId !== id);
-        state.categories = state.categories.filter(c => c.id !== id);
-        saveState();
-        renderCategoryList();
-        render();
-        showToast('Başlık silindi.');
-      };
-      if(count > 0){
-        openConfirm(`Bu başlıktaki ${count} link de birlikte silinecek. Devam edilsin mi?`, doDelete);
-      }else{
-        doDelete();
-      }
+      const parentSelect = document.getElementById('newCategoryParent');
+      const nameInput = document.getElementById('newCategoryName');
+      parentSelect.value = btn.dataset.parent;
+      nameInput.focus();
     });
   });
+
+  populateParentSelect();
 }
 
 document.getElementById('manageCategoriesBtn').addEventListener('click', openCategoryModal);
@@ -399,14 +475,17 @@ categoryModalOverlay.addEventListener('click', (e) => { if(e.target === category
 document.getElementById('newCategoryForm').addEventListener('submit', (e) => {
   e.preventDefault();
   const nameInput = document.getElementById('newCategoryName');
+  const parentSelect = document.getElementById('newCategoryParent');
   const name = nameInput.value.trim();
   if(!name) return;
-  state.categories.push({ id: uid(), name });
+  const parentId = parentSelect.value || null;
+  state.categories.push({ id: uid(), name, parentId });
   saveState();
   nameInput.value = '';
+  parentSelect.value = '';
   renderCategoryList();
   render();
-  showToast('Başlık eklendi.');
+  showToast(parentId ? 'Alt başlık eklendi.' : 'Başlık eklendi.');
 });
 
 /* ---------------- confirm modal ---------------- */

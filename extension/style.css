@@ -169,6 +169,13 @@ body{
 }
 .add-to-cat-btn:hover{ color: var(--accent); border-color: var(--accent); }
 
+.subcategory{ margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--border-strong); }
+.subsection-heading{ display: flex; align-items: center; gap: 8px; margin: 0 0 12px; flex-wrap: wrap; }
+.subsection-heading h4{
+  margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 0.95rem;
+  color: var(--text-dim);
+}
+
 /* ---------------- link list (side-by-side cards) ---------------- */
 .list-empty-hint{ margin: 4px 2px 0; color: var(--text-faint); font-size: 0.8rem; }
 
@@ -290,13 +297,15 @@ body{
 .confirm-modal{ max-width: 340px; text-align: center; }
 .confirm-modal p{ margin: 6px 0 4px; color: var(--text); }
 
-.category-list{ display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; max-height: 260px; overflow-y: auto; }
+.category-list{ display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; max-height: 320px; overflow-y: auto; }
+.category-group{ display: flex; flex-direction: column; gap: 6px; }
 .category-row-item{
   display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px;
   background: var(--bg-card); border: 1px solid var(--border);
 }
-.category-row-item .cname{ flex: 1; font-size: 0.88rem; font-weight: 600; }
-.category-row-item .ccount{ font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-faint); }
+.category-row-item.sub{ margin-left: 22px; background: var(--bg-soft); }
+.category-row-item .cname{ flex: 1; font-size: 0.88rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.category-row-item .ccount{ font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-faint); white-space: nowrap; }
 .category-row-item button{
   width: 26px; height: 26px; border-radius: 7px; border: none; background: transparent;
   color: var(--text-faint); cursor: pointer; display: flex; align-items: center; justify-content: center;
@@ -304,12 +313,21 @@ body{
 }
 .category-row-item button:hover{ background: var(--danger-soft); color: var(--danger); }
 .category-row-item button svg{ width: 14px; height: 14px; }
-
-.new-category-form{ display: flex; gap: 8px; }
-.new-category-form input[type="text"]{
-  flex: 1; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border);
-  background: var(--bg-card); color: var(--text); font-family: var(--font-body);
+.add-sub-btn{
+  width: auto !important; padding: 0 10px; border-radius: 999px !important;
+  border: 1px dashed var(--border-strong) !important; color: var(--text-dim) !important;
+  font-size: 0.7rem; font-family: var(--font-body); white-space: nowrap;
 }
+.add-sub-btn:hover{ background: transparent !important; color: var(--accent) !important; border-color: var(--accent) !important; }
+
+.new-category-form{ display: flex; flex-direction: column; gap: 8px; }
+.new-category-row{ display: flex; gap: 8px; }
+.new-category-form select,
+.new-category-form input[type="text"]{
+  padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--bg-card); color: var(--text); font-family: var(--font-body); font-size: 0.88rem;
+}
+.new-category-form input[type="text"]{ flex: 1; }
 
 /* ---------------- toast ---------------- */
 .toast{
