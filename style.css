@@ -157,7 +157,7 @@ body{
 
 /* ---------------- sections ---------------- */
 #categoriesContainer{
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   gap: 12px; align-items: start;
 }
 .category-section{
@@ -189,19 +189,20 @@ body{
 /* ---------------- link list (stacked rectangular rows) ---------------- */
 .list-empty-hint{ margin: 4px 2px 0; color: var(--text-faint); font-size: 0.8rem; }
 
-.link-list{ display: flex; flex-direction: column; gap: 4px; }
+.link-list{ display: flex; flex-direction: column; }
 
 .link-row{
   position: relative; display: flex; align-items: center; gap: 8px;
-  width: 100%; padding: 6px 8px; cursor: pointer; color: var(--text);
-  background: var(--bg-soft); border: 1px solid var(--border); border-radius: 8px;
+  width: 100%; padding: 7px 4px; cursor: pointer; color: var(--text);
+  background: transparent; border: none; border-bottom: 1px solid var(--border);
   opacity: 0; transform: translateY(4px);
   animation: row-in 0.3s ease forwards;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition: background 0.15s ease;
 }
+.link-row:last-child{ border-bottom: none; }
 @keyframes row-in{ to{ opacity: 1; transform: translateY(0); } }
-.link-row:hover{ border-color: var(--accent); background: var(--accent-soft); }
-.link-row:focus-visible{ outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.link-row:hover{ background: var(--accent-soft); border-radius: 6px; }
+.link-row:focus-visible{ outline: none; background: var(--accent-soft); border-radius: 6px; box-shadow: 0 0 0 2px var(--accent-soft); }
 
 .row-body{ flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0; }
 .row-name{
