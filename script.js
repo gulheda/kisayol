@@ -68,7 +68,7 @@ function showToast(msg){
 /* ---------------- theme ---------------- */
 
 function applyTheme(){
-  const preferred = state.theme || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  const preferred = state.theme || 'light';
   document.documentElement.setAttribute('data-theme', preferred);
 }
 

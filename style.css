@@ -32,22 +32,22 @@
 }
 
 :root[data-theme="light"]{
-  --bg: #f3ede1;
-  --bg-soft: #ece4d4;
-  --bg-elevated: #fffdf9;
-  --bg-card: #fffdf9;
-  --bg-card-hover: #fff9ef;
-  --border: rgba(30, 24, 14, 0.10);
-  --border-strong: rgba(30, 24, 14, 0.22);
-  --text: #201a10;
-  --text-dim: #6e6250;
-  --text-faint: #948667;
+  --bg: #f7f9fc;
+  --bg-soft: #eef2f7;
+  --bg-elevated: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f3f6fa;
+  --border: rgba(15, 23, 42, 0.09);
+  --border-strong: rgba(15, 23, 42, 0.18);
+  --text: #0f172a;
+  --text-dim: #64748b;
+  --text-faint: #97a3b8;
   --accent: #0891b2;
   --accent-2: #0e7490;
-  --accent-soft: rgba(8, 145, 178, 0.13);
-  --accent-contrast: #ecfeff;
-  --shadow-lg: 0 24px 60px -24px rgba(60,45,20,0.28);
-  --shadow-md: 0 10px 26px -14px rgba(60,45,20,0.22);
+  --accent-soft: rgba(8, 145, 178, 0.11);
+  --accent-contrast: #f0fdff;
+  --shadow-lg: 0 24px 60px -24px rgba(15,23,42,0.20);
+  --shadow-md: 0 10px 26px -14px rgba(15,23,42,0.16);
   color-scheme: light;
 }
 
