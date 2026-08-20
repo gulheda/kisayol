@@ -496,41 +496,6 @@ document.getElementById('menuToggle').addEventListener('click', (e) => {
 });
 document.addEventListener('click', () => { menuDropdown.classList.add('hidden'); closeAllRowMenus(); });
 
-document.getElementById('exportBtn').addEventListener('click', () => {
-  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'kisayol-yedek.json';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-  showToast('JSON olarak dışa aktarıldı.');
-});
-
-document.getElementById('importBtn').addEventListener('click', () => document.getElementById('importFile').click());
-document.getElementById('importFile').addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    try{
-      const data = JSON.parse(reader.result);
-      if(!Array.isArray(data.links) || !Array.isArray(data.categories)) throw new Error('geçersiz format');
-      state = data;
-      saveState();
-      applyTheme();
-      render();
-      showToast('Veriler içe aktarıldı.');
-    }catch(err){
-      showToast('İçe aktarma başarısız: dosya geçerli değil.');
-    }
-  };
-  reader.readAsText(file);
-  e.target.value = '';
-});
-
 document.getElementById('resetBtn').addEventListener('click', () => {
   openConfirm('Tüm başlıklar ve linkler silinecek. Emin misin?', () => {
     state = seedState();

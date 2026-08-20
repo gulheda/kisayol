@@ -27,8 +27,6 @@ kullanışlı bir erişim noktası sağlamayı amaçlar.
   veya alan adına göre filtreleme yapılır.
 - **Klavye kısayolları** — `/` arama, `n` yeni link, `Esc` pencereleri kapatır.
 - **Açık / Koyu tema** — sağ üstteki düğmeyle anında değiştirilebilir.
-- **Veri yedekleme** — tüm veriler JSON olarak dışa aktarılabilir ve
-  başka bir tarayıcıya/cihaza içe aktarılabilir.
 - **Otomatik site ikonu (favicon)** getirme; site ikonu bulunamazsa
   isim baş harfinden otomatik rozet oluşturulur.
 - **Kalıcı veri** — hiçbir sunucu/veritabanı gerekmez; tüm veriler
