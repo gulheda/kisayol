@@ -99,11 +99,15 @@ function faviconMarkup(link){
 
 function renderRow(link, rankIndex){
   const rankBadge = rankIndex !== null ? `<span class="row-rank">#${rankIndex + 1}</span>` : '';
+  const domain = getDomain(normalizeUrl(link.url));
   return `
     <div class="link-row" data-id="${link.id}" role="button" tabindex="0" title="${escapeHtml(link.name)}">
       ${rankBadge}
       ${faviconMarkup(link)}
-      <span class="row-name">${escapeHtml(link.name)}</span>
+      <span class="row-body">
+        <span class="row-name">${escapeHtml(link.name)}</span>
+        <span class="row-domain">${escapeHtml(domain)}</span>
+      </span>
       <button class="row-menu-btn" data-id="${link.id}" aria-label="Seçenekler">
         <svg viewBox="0 0 24 24" fill="none"><circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/></svg>
       </button>

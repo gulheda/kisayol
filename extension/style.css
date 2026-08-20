@@ -211,8 +211,13 @@ body{
   font-family: var(--font-mono); font-weight: 600; font-size: 0.68rem; color: var(--accent);
   flex-shrink: 0; width: 18px;
 }
+.row-body{ flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
 .row-name{
-  flex: 1; min-width: 0; font-weight: 600; font-size: 0.9rem;
+  font-weight: 600; font-size: 0.88rem; line-height: 1.25;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.row-domain{
+  font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-faint);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 
@@ -227,7 +232,7 @@ body{
 .row-menu-btn svg{ width: 14px; height: 14px; }
 
 .row-menu{
-  position: absolute; top: 40px; right: 8px; background: var(--bg-elevated);
+  position: absolute; top: 46px; right: 8px; background: var(--bg-elevated);
   border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow-lg);
   display: flex; flex-direction: column; padding: 5px; z-index: 10; min-width: 130px;
 }
