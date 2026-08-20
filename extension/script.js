@@ -4,7 +4,6 @@
    ========================================================================== */
 
 const STORAGE_KEY = 'kisayol.v3';
-const FAVORITES_ID = '__fav__';
 
 const DEFAULT_CATEGORIES = [];
 const DEFAULT_LINKS = [];
@@ -97,12 +96,10 @@ function faviconMarkup(link){
   return `<div class="favicon-wrap"><img src="${faviconUrl(url)}" alt="" loading="lazy" data-fallback="${fallback}"></div>`;
 }
 
-function renderRow(link, rankIndex){
-  const rankBadge = rankIndex !== null ? `<span class="row-rank">#${rankIndex + 1}</span>` : '';
+function renderRow(link){
   const domain = getDomain(normalizeUrl(link.url));
   return `
     <div class="link-row" data-id="${link.id}" role="button" tabindex="0" title="${escapeHtml(link.name)}">
-      ${rankBadge}
       ${faviconMarkup(link)}
       <span class="row-body">
         <span class="row-name">${escapeHtml(link.name)}</span>
@@ -119,15 +116,14 @@ function renderRow(link, rankIndex){
 }
 
 function renderSection(section){
-  const rowsHtml = section.links.map((l, i) => renderRow(l, section.special ? i : null)).join('');
+  const rowsHtml = section.links.map(l => renderRow(l)).join('');
   const subs = section.subs || [];
-  const emptyHint = (!section.special && section.links.length === 0 && subs.length === 0)
+  const emptyHint = (section.links.length === 0 && subs.length === 0)
     ? `<p class="list-empty-hint">Bu başlıkta henüz link yok.</p>` : '';
-  const addBtn = !section.special
-    ? `<button class="add-to-cat-btn" data-cat="${section.id}">+ link ekle</button>` : '';
+  const addBtn = `<button class="add-to-cat-btn" data-cat="${section.id}">+ link ekle</button>`;
 
   const subsHtml = subs.map(sub => {
-    const subRows = sub.links.map(l => renderRow(l, null)).join('');
+    const subRows = sub.links.map(l => renderRow(l)).join('');
     const subEmptyHint = sub.links.length === 0
       ? `<p class="list-empty-hint">Bu alt başlıkta henüz link yok.</p>` : '';
     return `
@@ -142,9 +138,8 @@ function renderSection(section){
   }).join('');
 
   return `
-    <section class="category-section ${section.special ? 'featured' : ''}" data-cat="${section.id}">
+    <section class="category-section" data-cat="${section.id}">
       <div class="section-heading">
-        ${section.special ? '<span class="section-star">★</span>' : ''}
         <h3>${escapeHtml(section.name)}</h3>
         ${addBtn}
       </div>
@@ -163,15 +158,7 @@ function render(){
 
   const matches = (l) => !query || l.name.toLowerCase().includes(query) || getDomain(normalizeUrl(l.url)).toLowerCase().includes(query);
 
-  const favLinks = [...state.links]
-    .filter(l => (l.clicks || 0) > 0)
-    .sort((a, b) => (b.clicks || 0) - (a.clicks || 0))
-    .slice(0, 5)
-    .filter(matches);
-
   const sections = [];
-  if(favLinks.length) sections.push({ id: FAVORITES_ID, name: 'Sık Kullanılanlar', special: true, links: favLinks });
-
   const topCategories = state.categories.filter(c => !c.parentId);
   topCategories.forEach(cat => {
     const links = state.links.filter(l => l.categoryId === cat.id).filter(matches);
@@ -212,10 +199,8 @@ function render(){
 
   container.querySelectorAll('.link-row').forEach(row => {
     const openRow = () => {
-      const id = row.dataset.id;
-      const link = state.links.find(l => l.id === id);
+      const link = state.links.find(l => l.id === row.dataset.id);
       if(!link) return;
-      registerClick(id);
       window.open(normalizeUrl(link.url), '_blank', 'noopener');
     };
     row.addEventListener('click', (e) => {
@@ -257,14 +242,6 @@ function render(){
 
 function closeAllRowMenus(){
   document.querySelectorAll('.row-menu').forEach(m => m.classList.add('hidden'));
-}
-
-function registerClick(id){
-  const link = state.links.find(l => l.id === id);
-  if(!link) return;
-  link.clicks = (link.clicks || 0) + 1;
-  saveState();
-  setTimeout(render, 150);
 }
 
 /* ---------------- search ---------------- */
@@ -356,7 +333,7 @@ linkForm.addEventListener('submit', (e) => {
     Object.assign(l, { name, url, categoryId, emoji });
     showToast('Link güncellendi.');
   }else{
-    state.links.push({ id: uid(), name, url, categoryId, emoji, clicks: 0, createdAt: Date.now() });
+    state.links.push({ id: uid(), name, url, categoryId, emoji, createdAt: Date.now() });
     showToast('Link eklendi.');
   }
   saveState();

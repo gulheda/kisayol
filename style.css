@@ -165,11 +165,7 @@ body{
   background: var(--bg-card); border: 2px solid var(--accent);
   border-radius: var(--radius-md); padding: 12px; box-shadow: var(--shadow-md);
 }
-.category-section.featured{
-  grid-column: 1 / -1; background: transparent; border: none; box-shadow: none; padding: 0;
-}
 .section-heading{ display: flex; align-items: center; gap: 8px; margin: 0 0 10px; flex-wrap: wrap; }
-.section-star{ color: var(--accent); font-size: 0.8rem; }
 .section-heading h3{
   margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 1rem;
   color: var(--accent);
@@ -207,10 +203,6 @@ body{
 .link-row:hover{ border-color: var(--accent); background: var(--bg-card-hover); }
 .link-row:focus-visible{ outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 
-.row-rank{
-  font-family: var(--font-mono); font-weight: 600; font-size: 0.68rem; color: var(--accent);
-  flex-shrink: 0; width: 18px;
-}
 .row-body{ flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
 .row-name{
   font-weight: 600; font-size: 0.88rem; line-height: 1.25;
