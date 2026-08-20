@@ -13,7 +13,14 @@ function uid(){ return Math.random().toString(36).slice(2, 10) + Date.now().toSt
 function loadState(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
-    if(raw) return JSON.parse(raw);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      return {
+        theme: parsed.theme || null,
+        categories: Array.isArray(parsed.categories) ? parsed.categories.filter(c => c && c.id && c.name) : [],
+        links: Array.isArray(parsed.links) ? parsed.links.filter(l => l && l.id && l.name && l.url) : []
+      };
+    }
   }catch(e){ console.warn('State okunamadı, varsayılana dönülüyor.', e); }
   return seedState();
 }

@@ -157,73 +157,74 @@ body{
 
 /* ---------------- sections ---------------- */
 #categoriesContainer{
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 14px; align-items: start;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px; align-items: start;
 }
 .category-section{
-  background: var(--bg-card); border: 2px solid var(--accent);
-  border-radius: var(--radius-md); padding: 12px; box-shadow: var(--shadow-md);
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: var(--radius-md); padding: 14px; box-shadow: var(--shadow-md);
 }
 .section-heading{ display: flex; align-items: center; gap: 8px; margin: 0 0 10px; flex-wrap: wrap; }
 .section-heading h3{
-  margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 1rem;
-  color: var(--accent);
+  margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
+  color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em;
 }
 .section-hint{ font-size: 0.76rem; color: var(--text-faint); font-family: var(--font-mono); }
 
 .add-to-cat-btn{
-  margin-left: auto; padding: 3px 10px; border-radius: 999px; border: 1px dashed var(--border-strong);
-  background: transparent; color: var(--text-faint); font-size: 0.7rem; cursor: pointer;
-  font-family: var(--font-body); white-space: nowrap; transition: color 0.15s, border-color 0.15s;
+  margin-left: auto; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border);
+  background: transparent; color: var(--text-faint); font-size: 0.68rem; cursor: pointer;
+  font-family: var(--font-body); white-space: nowrap; transition: color 0.15s, border-color 0.15s, background 0.15s;
 }
-.add-to-cat-btn:hover{ color: var(--accent); border-color: var(--accent); }
+.add-to-cat-btn:hover{ color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
 
-.subcategory{ margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border-strong); }
-.subsection-heading{ display: flex; align-items: center; gap: 8px; margin: 0 0 6px; flex-wrap: wrap; }
+.subcategory{ margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); }
+.subsection-heading{ display: flex; align-items: center; gap: 8px; margin: 0 0 8px; flex-wrap: wrap; }
 .subsection-heading h4{
-  margin: 0; font-family: var(--font-body); font-weight: 600; font-size: 0.85rem;
-  color: var(--text-dim);
+  margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.66rem;
+  color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em;
 }
 
 /* ---------------- link list (stacked rectangular rows) ---------------- */
 .list-empty-hint{ margin: 4px 2px 0; color: var(--text-faint); font-size: 0.8rem; }
 
-.link-list{ display: flex; flex-direction: column; gap: 6px; }
+.link-list{ display: flex; flex-direction: column; gap: 4px; }
 
 .link-row{
-  position: relative; display: flex; align-items: center; gap: 10px;
-  width: 100%; padding: 8px 10px; cursor: pointer; color: var(--text);
-  background: var(--accent-soft); border: 1px solid transparent; border-radius: 9px;
+  position: relative; display: flex; align-items: center; gap: 8px;
+  width: 100%; padding: 6px 8px; cursor: pointer; color: var(--text);
+  background: transparent; border: 1px solid transparent; border-radius: 8px;
   opacity: 0; transform: translateY(4px);
   animation: row-in 0.3s ease forwards;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 @keyframes row-in{ to{ opacity: 1; transform: translateY(0); } }
-.link-row:hover{ border-color: var(--accent); background: var(--bg-card-hover); }
+.link-row:hover{ border-color: var(--border); background: var(--accent-soft); }
 .link-row:focus-visible{ outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 
-.row-body{ flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.row-body{ flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0; }
 .row-name{
-  font-weight: 600; font-size: 0.88rem; line-height: 1.25;
+  font-weight: 600; font-size: 0.85rem; line-height: 1.25;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .row-domain{
-  font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-faint);
+  font-family: var(--font-mono); font-size: 0.68rem; line-height: 1.25; color: var(--text-faint);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 
 .row-menu-btn{
-  width: 26px; height: 26px; border-radius: 7px; border: none; background: transparent;
+  width: 22px; height: 22px; border-radius: 6px; border: none; background: transparent;
   color: var(--text-faint); display: flex; align-items: center; justify-content: center;
   cursor: pointer; opacity: 0; transition: opacity 0.15s, background 0.15s, color 0.15s;
   flex-shrink: 0;
 }
 .link-row:hover .row-menu-btn, .link-row:focus-within .row-menu-btn{ opacity: 1; }
 .row-menu-btn:hover{ background: var(--bg-card); color: var(--text); }
-.row-menu-btn svg{ width: 14px; height: 14px; }
+.row-menu-btn svg{ width: 13px; height: 13px; }
 
 .row-menu{
-  position: absolute; top: 46px; right: 8px; background: var(--bg-elevated);
+  position: absolute; top: 36px; right: 8px; background: var(--bg-elevated);
   border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow-lg);
   display: flex; flex-direction: column; padding: 5px; z-index: 10; min-width: 130px;
 }
@@ -236,11 +237,11 @@ body{
 .row-menu button.danger{ color: var(--danger); }
 
 .favicon-wrap{
-  width: 26px; height: 26px; border-radius: 7px; background: var(--bg-card);
+  width: 24px; height: 24px; border-radius: 6px; background: var(--bg-soft);
   display: flex; align-items: center; justify-content: center; overflow: hidden;
-  flex-shrink: 0; font-size: 0.72rem; font-weight: 700; border: 1px solid var(--border);
+  flex-shrink: 0; font-size: 0.68rem; font-weight: 700; border: 1px solid var(--border);
 }
-.favicon-wrap img{ width: 16px; height: 16px; }
+.favicon-wrap img{ width: 15px; height: 15px; }
 
 /* ---------------- empty state ---------------- */
 .empty-state{
