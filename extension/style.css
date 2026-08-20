@@ -3,7 +3,6 @@
    ========================================================================== */
 
 :root{
-  --font-display: 'Fraunces', 'Iowan Old Style', 'Georgia', serif;
   --font-body: 'Manrope', 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', 'Consolas', monospace;
 
@@ -167,7 +166,7 @@ body{
 }
 .section-heading{ display: flex; align-items: center; gap: 8px; margin: 0 0 10px; flex-wrap: wrap; }
 .section-heading h3{
-  margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+  margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 1rem;
   color: var(--accent);
 }
 .section-hint{ font-size: 0.76rem; color: var(--text-faint); font-family: var(--font-mono); }
@@ -179,10 +178,10 @@ body{
 }
 .add-to-cat-btn:hover{ color: var(--accent); border-color: var(--accent); }
 
-.subcategory{ margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--border-strong); }
-.subsection-heading{ display: flex; align-items: center; gap: 8px; margin: 0 0 12px; flex-wrap: wrap; }
+.subcategory{ margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border-strong); }
+.subsection-heading{ display: flex; align-items: center; gap: 8px; margin: 0 0 6px; flex-wrap: wrap; }
 .subsection-heading h4{
-  margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 0.95rem;
+  margin: 0; font-family: var(--font-body); font-weight: 600; font-size: 0.85rem;
   color: var(--text-dim);
 }
 
@@ -251,7 +250,7 @@ body{
 }
 .empty-state.hidden{ display: none; }
 .empty-emoji{ font-size: 1.6rem; color: var(--accent); margin: 0 0 6px; }
-.empty-title{ font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 0; }
+.empty-title{ font-family: var(--font-body); font-size: 1.3rem; font-weight: 600; margin: 0; }
 .empty-sub{ color: var(--text-dim); margin: 0 0 16px; max-width: 360px; }
 
 /* ---------------- modals ---------------- */
@@ -271,7 +270,7 @@ body{
 @keyframes modal-in{ from{ opacity: 0; transform: translateY(14px) scale(0.98); } to{ opacity: 1; transform: translateY(0) scale(1); } }
 
 .modal-head{ display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
-.modal-head h3{ margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 1.25rem; }
+.modal-head h3{ margin: 0; font-family: var(--font-body); font-weight: 600; font-size: 1.25rem; }
 
 .field{ display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; font-size: 0.82rem; color: var(--text-dim); }
 .field input, .field select{

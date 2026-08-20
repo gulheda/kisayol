@@ -43,8 +43,8 @@ kullanışlı bir erişim noktası sağlamayı amaçlar.
 - **Vanilla JavaScript (ES6+)** — herhangi bir framework/kütüphane
   kullanılmadan tüm mantık (state yönetimi, DOM güncelleme, localStorage,
   klavye olayları) sıfırdan yazılmıştır
-- **Google Fonts** — Fraunces (başlık), Manrope (gövde metni), JetBrains
-  Mono (teknik/etiket metinleri)
+- **Google Fonts** — Manrope (gövde ve başlık metni), JetBrains Mono
+  (adres/teknik metinler)
 - **Google Favicon servisi** — site ikonlarının otomatik getirilmesi için
 
 ## Dosya Yapısı
