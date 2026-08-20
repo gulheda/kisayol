@@ -301,7 +301,7 @@ function openLinkModal(id, presetCategoryId){
     populateCategorySelect(presetCategoryId || state.categories[0]?.id);
   }
   linkModalOverlay.classList.remove('hidden');
-  setTimeout(() => document.getElementById('linkName').focus(), 50);
+  setTimeout(() => document.getElementById('linkUrl').focus(), 50);
 }
 
 function closeLinkModal(){ linkModalOverlay.classList.add('hidden'); }
@@ -338,13 +338,14 @@ document.getElementById('newCategoryInline').addEventListener('click', () => {
 linkForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const id = document.getElementById('linkId').value;
-  const name = document.getElementById('linkName').value.trim();
   const url = normalizeUrl(document.getElementById('linkUrl').value.trim());
+  const rawName = document.getElementById('linkName').value.trim();
   const categoryId = document.getElementById('linkCategory').value;
   const emoji = document.getElementById('linkEmoji').value.trim();
 
-  if(!name || !url){ showToast('Lütfen ad ve adres gir.'); return; }
+  if(!url){ showToast('Lütfen bir adres gir.'); return; }
   if(!categoryId){ showToast('Lütfen bir başlık seç.'); return; }
+  const name = rawName || getDomain(url);
 
   if(id){
     const l = state.links.find(x => x.id === id);
