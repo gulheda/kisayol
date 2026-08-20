@@ -178,14 +178,14 @@ body{
 /* ---------------- link grid ---------------- */
 .grid-section{ min-height: 200px; }
 .link-grid{
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+  gap: 16px;
 }
 
 .link-card{
   position: relative; background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--radius-lg); padding: 24px; text-decoration: none; color: var(--text);
-  display: flex; flex-direction: column; gap: 18px; cursor: pointer;
+  border-radius: var(--radius-md); padding: 18px; text-decoration: none; color: var(--text);
+  display: flex; flex-direction: column; gap: 14px; cursor: pointer;
   opacity: 0; transform: translateY(10px);
   animation: card-in 0.5s ease forwards;
   animation-delay: calc(var(--i, 0) * 35ms);
@@ -210,11 +210,11 @@ body{
   padding: 2px 8px; border-radius: 999px; box-shadow: var(--shadow-md);
 }
 .favicon-wrap{
-  width: 56px; height: 56px; border-radius: 14px; background: var(--bg-soft);
+  width: 44px; height: 44px; border-radius: 12px; background: var(--bg-soft);
   display: flex; align-items: center; justify-content: center; overflow: hidden;
-  flex-shrink: 0; font-size: 1.5rem; border: 1px solid var(--border);
+  flex-shrink: 0; font-size: 1.2rem; border: 1px solid var(--border);
 }
-.favicon-wrap img{ width: 30px; height: 30px; }
+.favicon-wrap img{ width: 24px; height: 24px; }
 
 .card-menu-btn{
   width: 28px; height: 28px; border-radius: 8px; border: none; background: transparent;
@@ -226,7 +226,7 @@ body{
 .card-menu-btn svg{ width: 16px; height: 16px; }
 
 .card-menu{
-  position: absolute; top: 60px; right: 16px; background: var(--bg-elevated);
+  position: absolute; top: 50px; right: 12px; background: var(--bg-elevated);
   border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow-lg);
   display: flex; flex-direction: column; padding: 5px; z-index: 10; min-width: 130px;
 }
@@ -238,9 +238,9 @@ body{
 .card-menu button:hover{ background: var(--bg-card-hover); }
 .card-menu button.danger{ color: var(--danger); }
 
-.card-name{ font-weight: 700; font-size: 1.15rem; line-height: 1.3; }
+.card-name{ font-weight: 700; font-size: 1rem; line-height: 1.3; }
 .card-domain{
-  font-family: var(--font-mono); font-size: 0.82rem; color: var(--text-faint);
+  font-family: var(--font-mono); font-size: 0.76rem; color: var(--text-faint);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 /* ---------------- empty state ---------------- */
