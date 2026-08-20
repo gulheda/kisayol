@@ -139,12 +139,6 @@ function render(){
         <div class="card-name">${escapeHtml(l.name)}</div>
         <div class="card-domain">${escapeHtml(getDomain(normalizeUrl(l.url)))}</div>
       </div>
-      <div class="card-bottom">
-        <span class="card-clicks">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          ${clicks} tık
-        </span>
-      </div>
     </div>`;
   }).join('');
 

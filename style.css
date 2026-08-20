@@ -66,28 +66,8 @@ body{
 
 ::selection{ background: var(--accent); color: var(--accent-contrast); }
 
-/* ---------------- atmosphere ---------------- */
-.grain{
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  opacity: 0.05; mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-.blobs{ position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-.blobs span{
-  position: absolute; border-radius: 50%; filter: blur(90px);
-  opacity: 0.35; animation: drift 26s ease-in-out infinite;
-}
-.blobs span:nth-child(1){ width: 46vw; height: 46vw; background: var(--accent); top: -18vw; left: -12vw; }
-.blobs span:nth-child(2){ width: 34vw; height: 34vw; background: #a5f3fc; top: 30vh; right: -14vw; opacity: 0.16; animation-delay: -8s; }
-.blobs span:nth-child(3){ width: 30vw; height: 30vw; background: #164e63; bottom: -14vw; left: 18vw; opacity: 0.2; animation-delay: -16s; }
-:root[data-theme="light"] .blobs span{ opacity: 0.22; }
-@keyframes drift{
-  0%,100%{ transform: translate(0,0) scale(1); }
-  50%{ transform: translate(3vw, 4vw) scale(1.08); }
-}
-
 /* ---------------- layout shells ---------------- */
-.topbar, .page, .page-footer{ position: relative; z-index: 1; }
+.topbar, .page{ position: relative; z-index: 1; }
 
 .topbar{
   display: flex; align-items: center; gap: 20px;
@@ -263,13 +243,6 @@ body{
   font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-faint);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.card-bottom{ display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
-.card-clicks{
-  display: inline-flex; align-items: center; gap: 5px; font-size: 0.7rem; color: var(--text-faint);
-  font-family: var(--font-mono);
-}
-.card-clicks svg{ width: 12px; height: 12px; }
-
 /* ---------------- empty state ---------------- */
 .empty-state{
   display: flex; flex-direction: column; align-items: center; text-align: center;
@@ -280,12 +253,6 @@ body{
 .empty-emoji{ font-size: 1.6rem; color: var(--accent); margin: 0 0 6px; }
 .empty-title{ font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin: 0; }
 .empty-sub{ color: var(--text-dim); margin: 0 0 16px; max-width: 360px; }
-
-/* ---------------- footer ---------------- */
-.page-footer{
-  text-align: center; padding: 24px; color: var(--text-faint);
-  font-family: var(--font-mono); font-size: 0.72rem;
-}
 
 /* ---------------- modals ---------------- */
 .modal-overlay{
