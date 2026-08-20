@@ -123,7 +123,7 @@ function render(){
     const isTop = !query && clicks > 0 && i < 3;
     const rankBadge = isTop ? `<span class="rank-badge">#${i + 1} en çok kullanılan</span>` : '';
     return `
-    <div class="link-card ${isTop ? 'top-rank' : ''}" data-id="${l.id}" style="--i:${i}">
+    <div class="link-card ${isTop ? 'top-rank' : ''}" data-id="${l.id}" style="--i:${i}" role="button" tabindex="0" title="${escapeHtml(l.name)} sitesini aç">
       ${rankBadge}
       <div class="card-top">
         ${faviconMarkup(l)}
@@ -135,10 +135,10 @@ function render(){
           <button data-action="delete" data-id="${l.id}" class="danger">Sil</button>
         </div>
       </div>
-      <a href="${escapeHtml(normalizeUrl(l.url))}" target="_blank" rel="noopener" data-id="${l.id}" class="card-link-body" style="text-decoration:none;color:inherit;">
+      <div class="card-body">
         <div class="card-name">${escapeHtml(l.name)}</div>
         <div class="card-domain">${escapeHtml(getDomain(normalizeUrl(l.url)))}</div>
-      </a>
+      </div>
       <div class="card-bottom">
         <span class="card-clicks">
           <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -148,8 +148,24 @@ function render(){
     </div>`;
   }).join('');
 
-  grid.querySelectorAll('a[data-id]').forEach(a => {
-    a.addEventListener('click', () => registerClick(a.dataset.id));
+  grid.querySelectorAll('.link-card').forEach(card => {
+    const openCard = () => {
+      const id = card.dataset.id;
+      const link = state.links.find(l => l.id === id);
+      if(!link) return;
+      registerClick(id);
+      window.open(normalizeUrl(link.url), '_blank', 'noopener');
+    };
+    card.addEventListener('click', (e) => {
+      if(e.target.closest('.card-menu-btn') || e.target.closest('.card-menu')) return;
+      openCard();
+    });
+    card.addEventListener('keydown', (e) => {
+      if((e.key === 'Enter' || e.key === ' ') && !e.target.closest('.card-menu-btn') && !e.target.closest('.card-menu')){
+        e.preventDefault();
+        openCard();
+      }
+    });
   });
 
   grid.querySelectorAll('.card-menu-btn').forEach(btn => {
