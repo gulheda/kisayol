@@ -2,9 +2,10 @@
 
 Bu proje, kullanıcının en sık ziyaret ettiği web sitelerini tek bir yerde,
 sade ve kullanışlı bir arayüzle toplayan kişisel bir **başlangıç / sık
-kullanılanlar sayfasıdır**. Tarayıcıların dağınık favori sekmeleri yerine;
-aranabilir ve kullanım sıklığına göre kendi kendini sıralayan tek bir
-liste sunar — en çok tıklanan siteler otomatik olarak en üste çıkar.
+kullanılanlar sayfasıdır**. Linkler kendi tanımladığın **başlıklar**
+(ör. "BAUN CENG", "BAUN Teknokent") altında listeler hâlinde gruplanır;
+ayrıca en çok tıklanan linkler "Sık Kullanılanlar" başlığı altında
+otomatik olarak en üstte listelenir.
 
 ## Amaç
 
@@ -16,11 +17,14 @@ kullanışlı bir erişim noktası sağlamayı amaçlar.
 
 ## Özellikler
 
-- **Otomatik sıralama** — her linkin tıklanma sayısı tutulur, liste bu
-  sayıya göre en çoktan aza sıralanır; ilk üç sıradaki siteler rozetle
-  ("#1 en çok kullanılan" vb.) vurgulanır.
-- **Ekle / Düzenle / Sil** — her link için ad, adres ve isteğe bağlı
-  emoji ikon tanımlanabilir.
+- **Başlıklar (kategoriler)** — kendi başlıklarını oluşturur, her linki
+  bir başlık altına eklersin; sayfada her başlık kendi listesiyle
+  ayrı bir bölüm olarak görünür.
+- **Sık Kullanılanlar** — tıklanma sayısı en yüksek 5 link, sırasıyla
+  rozetlenerek en üstte otomatik listelenir.
+- **Ekle / Düzenle / Sil** — her link için ad, adres, başlık ve isteğe
+  bağlı emoji ikon tanımlanabilir; başlıklar da ayrı bir ekrandan
+  eklenip silinebilir.
 - **Arama** — `/` kısayoluyla anında arama kutusuna odaklanılır, isim
   veya alan adına göre filtreleme yapılır.
 - **Klavye kısayolları** — `/` arama, `n` yeni link, `Esc` pencereleri kapatır.
@@ -86,17 +90,19 @@ yayınlamak ayrıca bir geliştirici hesabı ve inceleme süreci gerektirir.
 
 ## Veri Modeli
 
-Uygulama durumu `localStorage` içinde `kisayol.v2` anahtarıyla şu
+Uygulama durumu `localStorage` içinde `kisayol.v3` anahtarıyla şu
 biçimde saklanır:
 
 ```json
 {
   "theme": "dark",
+  "categories": [{ "id": "c1", "name": "BAUN CENG" }],
   "links": [
     {
       "id": "a1b2c3",
-      "name": "GitHub",
-      "url": "https://github.com",
+      "name": "Staj Bloğu",
+      "url": "https://obs.baun.edu.tr",
+      "categoryId": "c1",
       "emoji": "",
       "clicks": 14,
       "createdAt": 1734000000000
@@ -109,4 +115,4 @@ biçimde saklanır:
 
 - Kullanıcı hesabı ile bulutta senkronizasyon (şu an tek tarayıcıya özel)
 - Tarayıcı yer imlerinden toplu içe aktarma
-- Link etiketleme / gruplama (isteğe bağlı, mevcut sadelikten ödün vermeden)
+- Başlıkları sürükle-bırak ile yeniden sıralama

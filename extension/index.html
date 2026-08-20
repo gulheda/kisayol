@@ -35,10 +35,11 @@
       <svg viewBox="0 0 24 24" fill="none"><circle cx="5" cy="12" r="1.8" fill="currentColor"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/><circle cx="19" cy="12" r="1.8" fill="currentColor"/></svg>
     </button>
     <div id="menuDropdown" class="menu-dropdown hidden">
+      <button id="manageCategoriesBtn">Başlıkları yönet</button>
       <button id="exportBtn">Dışa aktar (JSON)</button>
       <button id="importBtn">İçe aktar (JSON)</button>
       <input type="file" id="importFile" accept="application/json" hidden>
-      <button id="resetBtn" class="danger">Varsayılana sıfırla</button>
+      <button id="resetBtn" class="danger">Tümünü sıfırla</button>
     </div>
     <button id="addLinkBtn" class="add-btn">
       <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
@@ -52,16 +53,12 @@
     <p class="hero-clock" id="clock">--:--</p>
   </section>
 
-  <section class="grid-section">
-    <div class="section-heading">
-      <span class="section-star">★</span>
-      <h3>Sık Kullanılanlar</h3>
-    </div>
-    <div id="linkGrid" class="link-grid"></div>
+  <section class="lists-section">
+    <div id="categoriesContainer"></div>
     <div id="emptyState" class="empty-state hidden">
       <p class="empty-emoji">✦</p>
       <p class="empty-title">Henüz link yok</p>
-      <p class="empty-sub">Sık kullandığın siteleri ekleyerek başlangıç sayfanı oluştur.</p>
+      <p class="empty-sub">Bir başlık altında ilk linkini ekleyerek başlangıç sayfanı oluştur.</p>
       <button class="add-btn" id="emptyAddBtn">
         <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
         <span>İlk linkini ekle</span>
@@ -90,6 +87,13 @@
         <span>Adres (URL)</span>
         <input type="text" id="linkUrl" placeholder="ör. github.com" required>
       </label>
+      <label class="field">
+        <span>Başlık</span>
+        <div class="select-row">
+          <select id="linkCategory"></select>
+          <button type="button" id="newCategoryInline" class="mini-btn">+ yeni başlık</button>
+        </div>
+      </label>
       <label class="field emoji-field">
         <span>İkon (isteğe bağlı emoji)</span>
         <input type="text" id="linkEmoji" maxlength="4" placeholder="🔗">
@@ -98,6 +102,23 @@
         <button type="button" class="btn ghost" id="linkCancelBtn">Vazgeç</button>
         <button type="submit" class="btn primary">Kaydet</button>
       </div>
+    </form>
+  </div>
+</div>
+
+<!-- Başlık yönetim modal -->
+<div class="modal-overlay hidden" id="categoryModalOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="catModalTitle">
+    <div class="modal-head">
+      <h3 id="catModalTitle">Başlıkları Yönet</h3>
+      <button class="icon-btn modal-close" id="categoryModalClose" aria-label="Kapat">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div id="categoryList" class="category-list"></div>
+    <form id="newCategoryForm" class="new-category-form">
+      <input type="text" id="newCategoryName" placeholder="ör. BAUN CENG" required>
+      <button type="submit" class="btn primary">Ekle</button>
     </form>
   </div>
 </div>
