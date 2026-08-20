@@ -31,7 +31,9 @@ kullanışlı bir erişim noktası sağlamayı amaçlar.
   isim baş harfinden otomatik rozet oluşturulur.
 - **Kalıcı veri** — hiçbir sunucu/veritabanı gerekmez; tüm veriler
   tarayıcının `localStorage` alanında saklanır.
-- Karşılama mesajı, canlı saat ve günün sözü gibi küçük UX detayları.
+- **Chrome eklentisi** — `extension/` klasörü, tarayıcının yeni sekme
+  sayfasını doğrudan bu uygulamayla değiştiren bir Chrome eklentisi
+  olarak da yüklenebilir (aşağıya bakın).
 
 ## Kullanılan Teknolojiler
 
@@ -49,19 +51,38 @@ kullanışlı bir erişim noktası sağlamayı amaçlar.
 
 ```
 kısayol/
-├── index.html   → sayfa iskeleti ve tüm bileşenler (modallar dahil)
-├── style.css    → tema, düzen, animasyon ve tüm görsel tasarım
-├── script.js    → uygulama mantığı (state, render, olaylar)
-└── README.md    → bu dosya
+├── index.html        → web sayfası iskeleti ve tüm bileşenler (modallar dahil)
+├── style.css         → tema, düzen, animasyon ve tüm görsel tasarım
+├── script.js         → uygulama mantığı (state, render, olaylar)
+├── extension/        → aynı uygulamanın Chrome eklentisi hâli
+│   ├── manifest.json → eklenti tanımı (yeni sekme sayfasını devralır)
+│   ├── index.html, style.css, script.js → web sürümüyle birebir aynı
+│   └── icons/         → eklenti simgeleri (16/48/128px)
+└── README.md         → bu dosya
 ```
 
-## Çalıştırma
+## Çalıştırma (web sayfası olarak)
 
 Kurulum veya derleme gerekmez. `index.html` dosyasını herhangi bir
 modern tarayıcıda (Chrome, Edge, Firefox) çift tıklayarak açmak
 yeterlidir. İnternet bağlantısı; yalnızca Google Fonts ve site
 ikonlarının yüklenmesi için kullanılır, bağlantı olmasa da uygulama
 sistem yazı tipleriyle ve harf rozetleriyle sorunsuz çalışmaya devam eder.
+
+## Chrome eklentisi olarak yükleme
+
+`extension/` klasörü, sayfayı tarayıcının **yeni sekme** ekranının
+yerine geçirecek şekilde paketler. Yüklemek için:
+
+1. Chrome'da `chrome://extensions` adresine git.
+2. Sağ üstten **Geliştirici modu**'nu (Developer mode) aç.
+3. **Paketlenmemiş öğe yükle** (Load unpacked) butonuna tıkla.
+4. Bu projedeki `extension` klasörünü seç.
+5. Yeni bir sekme açtığında (Ctrl+T) kısayol sayfası karşına çıkar.
+
+Not: Bu, Chrome Web Store'a yayınlamadan, yerel/geliştirici modda
+yüklenen bir eklentidir — okul projesi/demo için idealdir, mağazaya
+yayınlamak ayrıca bir geliştirici hesabı ve inceleme süreci gerektirir.
 
 ## Veri Modeli
 
