@@ -189,7 +189,7 @@ body{
 .cat-menu-btn svg{ width: 14px; height: 14px; }
 
 .cat-menu{
-  position: absolute; top: 40px; right: 12px; background: var(--bg-elevated);
+  position: absolute; top: 40px; left: 12px; background: var(--bg-elevated);
   border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow-lg);
   display: flex; flex-direction: column; padding: 5px; z-index: 20; min-width: 120px;
 }
