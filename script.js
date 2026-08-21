@@ -456,7 +456,10 @@ function renderCategoryList(){
   populateParentSelect();
 }
 
-document.getElementById('manageCategoriesBtn').addEventListener('click', openCategoryModal);
+document.getElementById('manageCategoriesBtn').addEventListener('click', (e) => {
+  e.stopPropagation();
+  openCategoryModal();
+});
 document.getElementById('categoryModalClose').addEventListener('click', () => categoryModalOverlay.classList.add('hidden'));
 categoryModalOverlay.addEventListener('click', (e) => { if(e.target === categoryModalOverlay) categoryModalOverlay.classList.add('hidden'); });
 
@@ -503,7 +506,9 @@ document.getElementById('menuToggle').addEventListener('click', (e) => {
 });
 document.addEventListener('click', () => { menuDropdown.classList.add('hidden'); closeAllRowMenus(); });
 
-document.getElementById('resetBtn').addEventListener('click', () => {
+document.getElementById('resetBtn').addEventListener('click', (e) => {
+  e.stopPropagation();
+  menuDropdown.classList.add('hidden');
   openConfirm('Tüm başlıklar ve linkler silinecek. Emin misin?', () => {
     state = seedState();
     saveState();
