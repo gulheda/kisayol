@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=14">
+<link rel="stylesheet" href="style.css?v=15">
 </head>
 <body>
 
@@ -120,6 +120,28 @@
   </div>
 </div>
 
+<!-- Başlık yeniden adlandırma modal -->
+<div class="modal-overlay hidden" id="renameModalOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="renameModalTitle">
+    <div class="modal-head">
+      <h3 id="renameModalTitle">Başlığı Düzenle</h3>
+      <button class="icon-btn modal-close" id="renameModalClose" aria-label="Kapat">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <form id="renameForm">
+      <label class="field">
+        <span>Başlık adı</span>
+        <input type="text" id="renameInput" required>
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="btn ghost" id="renameCancelBtn">Vazgeç</button>
+        <button type="submit" class="btn primary">Kaydet</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <!-- Onay modal -->
 <div class="modal-overlay hidden" id="confirmOverlay">
   <div class="modal confirm-modal" role="alertdialog" aria-modal="true">
@@ -133,6 +155,6 @@
 
 <div id="toast" class="toast hidden"></div>
 
-<script src="script.js?v=14"></script>
+<script src="script.js?v=15"></script>
 </body>
 </html>

@@ -289,18 +289,40 @@ function closeAllCatMenus(){
   document.querySelectorAll('.cat-menu').forEach(m => m.classList.add('hidden'));
 }
 
+let renameTargetId = null;
+const renameModalOverlay = document.getElementById('renameModalOverlay');
+const renameForm = document.getElementById('renameForm');
+const renameInput = document.getElementById('renameInput');
+
 function renameCategory(id){
   const cat = categoryById(id);
   if(!cat) return;
-  const newName = prompt('Yeni başlık adı:', cat.name);
-  if(newName === null) return;
-  const trimmed = newName.trim();
-  if(!trimmed) return;
-  cat.name = trimmed;
+  renameTargetId = id;
+  renameInput.value = cat.name;
+  renameModalOverlay.classList.remove('hidden');
+  setTimeout(() => { renameInput.focus(); renameInput.select(); }, 50);
+}
+
+function closeRenameModal(){
+  renameModalOverlay.classList.add('hidden');
+  renameTargetId = null;
+}
+
+document.getElementById('renameModalClose').addEventListener('click', closeRenameModal);
+document.getElementById('renameCancelBtn').addEventListener('click', closeRenameModal);
+renameModalOverlay.addEventListener('click', (e) => { if(e.target === renameModalOverlay) closeRenameModal(); });
+
+renameForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = renameInput.value.trim();
+  const cat = renameTargetId && categoryById(renameTargetId);
+  if(!name || !cat) return;
+  cat.name = name;
   saveState();
+  closeRenameModal();
   render();
   showToast('Başlık güncellendi.');
-}
+});
 
 /* ---------------- search ---------------- */
 
@@ -576,6 +598,7 @@ document.addEventListener('keydown', (e) => {
 
   if(e.key === 'Escape'){
     closeLinkModal();
+    closeRenameModal();
     categoryModalOverlay.classList.add('hidden');
     confirmOverlay.classList.add('hidden');
     menuDropdown.classList.add('hidden');
