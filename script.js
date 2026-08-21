@@ -106,7 +106,7 @@ function faviconMarkup(link){
 function renderRow(link){
   const domain = getDomain(normalizeUrl(link.url));
   return `
-    <div class="link-row" data-id="${link.id}" role="button" tabindex="0" title="${escapeHtml(link.name)}">
+    <div class="link-row" data-id="${link.id}" role="button" tabindex="0">
       ${faviconMarkup(link)}
       <span class="row-body">
         <span class="row-name">${escapeHtml(link.name)}</span>
