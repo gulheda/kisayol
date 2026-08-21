@@ -16,9 +16,9 @@
   --text: #e9eefb;
   --text-dim: #8b96b3;
   --text-faint: #57608a;
-  --accent: #06b6d4;
+  --accent: #00d1e0;
   --accent-2: #22d3ee;
-  --accent-soft: rgba(6, 182, 212, 0.16);
+  --accent-soft: rgba(0, 209, 224, 0.16);
   --accent-contrast: #032e33;
   --danger: #ff5c5c;
   --danger-soft: rgba(255, 92, 92, 0.14);
@@ -41,9 +41,9 @@
   --text: #0f172a;
   --text-dim: #64748b;
   --text-faint: #97a3b8;
-  --accent: #0891b2;
-  --accent-2: #0e7490;
-  --accent-soft: rgba(8, 145, 178, 0.11);
+  --accent: #00b8d4;
+  --accent-2: #0891b2;
+  --accent-soft: rgba(0, 184, 212, 0.13);
   --accent-contrast: #f0fdff;
   --shadow-lg: 0 24px 60px -24px rgba(15,23,42,0.20);
   --shadow-md: 0 10px 26px -14px rgba(15,23,42,0.16);
@@ -189,7 +189,7 @@ body{
 .cat-menu-btn svg{ width: 14px; height: 14px; }
 
 .cat-menu{
-  position: absolute; top: 40px; left: 12px; background: var(--bg-elevated);
+  position: absolute; top: 40px; right: 12px; background: var(--bg-elevated);
   border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow-lg);
   display: flex; flex-direction: column; padding: 5px; z-index: 20; min-width: 120px;
 }

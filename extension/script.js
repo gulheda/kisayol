@@ -147,9 +147,9 @@ function renderSection(section){
     return `
       <div class="subcategory" data-cat="${sub.id}">
         <div class="subsection-heading">
-          ${catMenuMarkup(sub.id)}
           <h4>${escapeHtml(sub.name)}</h4>
           <button class="add-to-cat-btn" data-cat="${sub.id}">+ link ekle</button>
+          ${catMenuMarkup(sub.id)}
         </div>
         ${sub.links.length > 0 ? `<div class="link-list">${subRows}</div>` : ''}
         ${subEmptyHint}
@@ -159,9 +159,9 @@ function renderSection(section){
   return `
     <section class="category-section" data-cat="${section.id}">
       <div class="section-heading">
-        ${catMenuMarkup(section.id)}
         <h3>${escapeHtml(section.name)}</h3>
         ${addBtn}
+        ${catMenuMarkup(section.id)}
       </div>
       ${section.links.length > 0 ? `<div class="link-list">${rowsHtml}</div>` : ''}
       ${emptyHint}
