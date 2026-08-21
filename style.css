@@ -161,6 +161,7 @@ body{
   gap: 12px; align-items: start;
 }
 .category-section{
+  position: relative;
   background: var(--bg-card); border: 1px solid var(--border);
   border-top: 3px solid var(--accent);
   border-radius: var(--radius-md); padding: 14px; box-shadow: var(--shadow-md);
@@ -179,7 +180,28 @@ body{
 }
 .add-to-cat-btn:hover{ color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
 
-.subcategory{ margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); }
+.cat-menu-btn{
+  width: 22px; height: 22px; border-radius: 6px; border: none; background: transparent;
+  color: var(--text-faint); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0; transition: background 0.15s, color 0.15s;
+}
+.cat-menu-btn:hover{ background: var(--bg-soft); color: var(--text); }
+.cat-menu-btn svg{ width: 14px; height: 14px; }
+
+.cat-menu{
+  position: absolute; top: 40px; right: 12px; background: var(--bg-elevated);
+  border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow-lg);
+  display: flex; flex-direction: column; padding: 5px; z-index: 20; min-width: 120px;
+}
+.cat-menu.hidden{ display: none; }
+.cat-menu button{
+  text-align: left; padding: 8px 10px; border: none; background: none; color: var(--text);
+  font-size: 0.82rem; border-radius: 7px; cursor: pointer; font-family: var(--font-body);
+}
+.cat-menu button:hover{ background: var(--bg-card-hover); }
+.cat-menu button.danger{ color: var(--danger); }
+
+.subcategory{ position: relative; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); }
 .subsection-heading{ display: flex; align-items: center; gap: 8px; margin: 0 0 8px; flex-wrap: wrap; }
 .subsection-heading h4{
   margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.66rem;

@@ -122,6 +122,17 @@ function renderRow(link){
     </div>`;
 }
 
+function catMenuMarkup(id){
+  return `
+    <button class="cat-menu-btn" data-cat="${id}" aria-label="Başlık seçenekleri">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/></svg>
+    </button>
+    <div class="cat-menu hidden" data-catmenu="${id}">
+      <button data-action="edit-cat" data-id="${id}">Düzenle</button>
+      <button data-action="delete-cat" data-id="${id}" class="danger">Sil</button>
+    </div>`;
+}
+
 function renderSection(section){
   const rowsHtml = section.links.map(l => renderRow(l)).join('');
   const subs = section.subs || [];
@@ -138,6 +149,7 @@ function renderSection(section){
         <div class="subsection-heading">
           <h4>${escapeHtml(sub.name)}</h4>
           <button class="add-to-cat-btn" data-cat="${sub.id}">+ link ekle</button>
+          ${catMenuMarkup(sub.id)}
         </div>
         ${sub.links.length > 0 ? `<div class="link-list">${subRows}</div>` : ''}
         ${subEmptyHint}
@@ -149,6 +161,7 @@ function renderSection(section){
       <div class="section-heading">
         <h3>${escapeHtml(section.name)}</h3>
         ${addBtn}
+        ${catMenuMarkup(section.id)}
       </div>
       ${section.links.length > 0 ? `<div class="link-list">${rowsHtml}</div>` : ''}
       ${emptyHint}
@@ -245,10 +258,48 @@ function render(){
   container.querySelectorAll('.add-to-cat-btn').forEach(btn => {
     btn.addEventListener('click', () => openLinkModal(null, btn.dataset.cat));
   });
+
+  container.querySelectorAll('.cat-menu-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const menu = container.querySelector(`.cat-menu[data-catmenu="${btn.dataset.cat}"]`);
+      const wasHidden = menu.classList.contains('hidden');
+      closeAllRowMenus();
+      closeAllCatMenus();
+      if(wasHidden) menu.classList.remove('hidden');
+    });
+  });
+
+  container.querySelectorAll('.cat-menu button').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.dataset.id;
+      closeAllCatMenus();
+      if(btn.dataset.action === 'edit-cat') renameCategory(id);
+      else if(btn.dataset.action === 'delete-cat') deleteCategoryCascade(id);
+    });
+  });
 }
 
 function closeAllRowMenus(){
   document.querySelectorAll('.row-menu').forEach(m => m.classList.add('hidden'));
+}
+
+function closeAllCatMenus(){
+  document.querySelectorAll('.cat-menu').forEach(m => m.classList.add('hidden'));
+}
+
+function renameCategory(id){
+  const cat = categoryById(id);
+  if(!cat) return;
+  const newName = prompt('Yeni başlık adı:', cat.name);
+  if(newName === null) return;
+  const trimmed = newName.trim();
+  if(!trimmed) return;
+  cat.name = trimmed;
+  saveState();
+  render();
+  showToast('Başlık güncellendi.');
 }
 
 /* ---------------- search ---------------- */
@@ -504,7 +555,7 @@ document.getElementById('menuToggle').addEventListener('click', (e) => {
   e.stopPropagation();
   menuDropdown.classList.toggle('hidden');
 });
-document.addEventListener('click', () => { menuDropdown.classList.add('hidden'); closeAllRowMenus(); });
+document.addEventListener('click', () => { menuDropdown.classList.add('hidden'); closeAllRowMenus(); closeAllCatMenus(); });
 
 document.getElementById('resetBtn').addEventListener('click', (e) => {
   e.stopPropagation();
@@ -529,6 +580,7 @@ document.addEventListener('keydown', (e) => {
     confirmOverlay.classList.add('hidden');
     menuDropdown.classList.add('hidden');
     closeAllRowMenus();
+    closeAllCatMenus();
     if(typing) document.activeElement.blur();
     return;
   }
