@@ -130,22 +130,6 @@ body{
 }
 .add-btn.ghost-btn:hover{ border-color: var(--accent); color: var(--accent); filter: none; }
 
-.menu-dropdown{
-  position: absolute; top: calc(100% + 10px); right: 96px;
-  background: var(--bg-elevated); border: 1px solid var(--border);
-  border-radius: var(--radius-md); box-shadow: var(--shadow-lg);
-  display: flex; flex-direction: column; min-width: 200px; padding: 6px;
-  z-index: 30;
-}
-.menu-dropdown.hidden{ display: none; }
-.menu-dropdown button{
-  text-align: left; padding: 10px 12px; border: none; background: none;
-  color: var(--text); font-family: var(--font-body); font-size: 0.88rem;
-  border-radius: 8px; cursor: pointer; transition: background 0.15s;
-}
-.menu-dropdown button:hover{ background: var(--bg-card-hover); }
-.menu-dropdown button.danger{ color: var(--danger); }
-
 /* ---------------- hero ---------------- */
 .page{ max-width: 1180px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px) 60px; }
 
@@ -374,5 +358,4 @@ body{
   .search-wrap{ order: 3; max-width: none; flex-basis: 100%; }
   .add-btn span{ display: none; }
   .add-btn{ padding: 10px 12px; }
-  .menu-dropdown{ right: 10px; }
 }

@@ -437,7 +437,6 @@ function confirmDeleteLink(id){
 const categoryModalOverlay = document.getElementById('categoryModalOverlay');
 
 function openCategoryModal(){
-  document.getElementById('menuDropdown').classList.add('hidden');
   renderCategoryList();
   categoryModalOverlay.classList.remove('hidden');
   setTimeout(() => document.getElementById('newCategoryName').focus(), 50);
@@ -566,25 +565,7 @@ document.getElementById('confirmOk').addEventListener('click', () => {
 });
 confirmOverlay.addEventListener('click', (e) => { if(e.target === confirmOverlay){ confirmOverlay.classList.add('hidden'); confirmCallback = null; } });
 
-/* ---------------- menu dropdown (export/import/reset) ---------------- */
-
-const menuDropdown = document.getElementById('menuDropdown');
-document.getElementById('menuToggle').addEventListener('click', (e) => {
-  e.stopPropagation();
-  menuDropdown.classList.toggle('hidden');
-});
-document.addEventListener('click', () => { menuDropdown.classList.add('hidden'); closeAllRowMenus(); closeAllCatMenus(); });
-
-document.getElementById('resetBtn').addEventListener('click', (e) => {
-  e.stopPropagation();
-  menuDropdown.classList.add('hidden');
-  openConfirm('Tüm başlıklar ve linkler silinecek. Emin misin?', () => {
-    state = seedState();
-    saveState();
-    render();
-    showToast('Sıfırlandı.');
-  });
-});
+document.addEventListener('click', () => { closeAllRowMenus(); closeAllCatMenus(); });
 
 /* ---------------- keyboard shortcuts ---------------- */
 
@@ -597,7 +578,6 @@ document.addEventListener('keydown', (e) => {
     closeRenameModal();
     categoryModalOverlay.classList.add('hidden');
     confirmOverlay.classList.add('hidden');
-    menuDropdown.classList.add('hidden');
     closeAllRowMenus();
     closeAllCatMenus();
     if(typing) document.activeElement.blur();
