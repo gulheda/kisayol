@@ -529,10 +529,6 @@ function renderCategoryList(){
   populateParentSelect();
 }
 
-document.getElementById('manageCategoriesBtn').addEventListener('click', (e) => {
-  e.stopPropagation();
-  openCategoryModal();
-});
 document.getElementById('categoryModalClose').addEventListener('click', () => categoryModalOverlay.classList.add('hidden'));
 categoryModalOverlay.addEventListener('click', (e) => { if(e.target === categoryModalOverlay) categoryModalOverlay.classList.add('hidden'); });
 
